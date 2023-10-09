@@ -1,7 +1,7 @@
 ---
 - name: Install Docker
-  hosts: target # インストール対象のホストグループを指定
-  become: yes               # sudo権限でコマンドを実行
+  hosts: target
+  become: yes
 
   tasks:
     - name: Install packages required for Docker
