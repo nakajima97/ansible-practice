@@ -1,0 +1,19 @@
+---
+- name: Setup Zabbix
+  hosts: target
+  become: yes
+
+  tasks:
+  - name: Git clone
+    ansible.builtin.git:
+      repo: https://github.com/zabbix/zabbix-docker
+      dest: /home/app/zabbix
+
+  - name: Change port 80
+    command: sed -i 's/"80:8080"/"60080:8080"/' /home/app/zabbix/docker-compose_v3_alpine_mysql_latest.yaml
+
+  - name: Change port 443
+    command: sed -i 's/"443:8443"/"60443:8443"/' /home/app/zabbix/docker-compose_v3_alpine_mysql_latest.yaml
+
+  - name: Run docker compose
+    command: docker compose -f /home/app/zabbix/docker-compose_v3_alpine_mysql_latest.yaml up -d
